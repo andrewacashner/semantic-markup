@@ -1,0 +1,13 @@
+The semantic-markup package provides a set of simple commands to allow for semantic markup.
+The commands are inspired by the XML elements of the Text Encoding Initiative (http://www.tei-c.org).
+They are intended especially for scholarly writing in the humanities, including about music.
+The goal is simply to allow scholars to write with attention to meaning and content rather than to formatting.
+
+The package provides several semantic replacements for \emph and quoting commands, such as \term, \foreign, \mentioned, \soCalled, and \quoted.
+It also provides a Footnote environment so that long footnotes can be more cleanly separated from the main text.
+Because the author is a music scholar, the package also includes some macros for musical symbols and other basic notations for musical analysis.
+All the commands can be easily redefined as needed.
+
+This material is subject to the current version of the LaTeX Project Public License.
+The author and maintainer is Andrew A. Cashner, andrewacashner@gmail.com.
+
