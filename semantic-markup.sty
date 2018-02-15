@@ -18,6 +18,8 @@
 % and the documentation file semantic-markup.tex.
 
 % CHANGE LOG
+% 2018-02-15 Check if `\strong` is defined to avoid conflict with `fontspec`;
+%               `\wtitle` and `\ptitle` shorthands added             
 % 2016-09-22 `endnotes' option added
 % 2016-09-01 First version on CTAN
 
@@ -46,12 +48,18 @@
   \DeclareAutoPunct{.,!?}
 \fi
 
+% fontspec defines its own \strong command
+\ifdefined\strong\else
+\NewDocumentCommand{\strong}{}	
+{\textbf}
+\fi
+
+
 \NewDocumentCommand{\quoted}{}	
 {\textquote}
 \NewDocumentCommand{\soCalled}{}
 {\textquote}
-\NewDocumentCommand{\strong}{}	
-{\textbf}
+
 \NewDocumentCommand{\code}{}	
 {\texttt}
 \NewDocumentCommand{\term}{}	
@@ -60,10 +68,15 @@
 {\emph}
 \NewDocumentCommand{\foreign}{}
 {\emph}
+
 \NewDocumentCommand{\worktitle}{}
 {\emph}
 \NewDocumentCommand{\parttitle}{}
 {\textquote}
+
+% Shorter versions of these frequently used commands
+\let\wtitle\worktitle
+\let\ptitle\parttitle
 
 % editorial addition
 \NewDocumentCommand{\add}{ m }
