@@ -112,7 +112,6 @@
 % Endnotes, if desired
 % Footnote environment adjusted to fix expansion problem
 \ifendnotes
-  \RequirePackage{endnotes}
   \RenewEnviron{Footnote}{\expandafter\footnote\expandafter{\BODY}}[]
   \let\footnote=\endnote
   \AtEndDocument{\theendnotes}
