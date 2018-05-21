@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{semantic-markup}[2016/10/28
+\ProvidesPackage{semantic-markup}[2018/05/21
   Macros for TEI-like semantic markup]
-% Copyright 2016 Andrew A. Cashner, andrewacashner@gmail.com
+% Copyright 2018 Andrew A. Cashner, andrewacashner@gmail.com
 
 % This work may be distributed and/or modified under the 
 % conditions of the LaTeX Project Public License, either
@@ -18,10 +18,14 @@
 % and the documentation file semantic-markup.tex.
 
 % CHANGE LOG
-% 2018-02-15 Check if `\strong` is defined to avoid conflict with `fontspec`;
-%               `\wtitle` and `\ptitle` shorthands added             
-% 2016-09-22 `endnotes' option added
-% 2016-09-01 First version on CTAN
+% 2018-05-21 - Use fontspec's definition of `\strong` if it is loaded
+%            - Use musicography's definition of `\fl`, `\sh`, `\na` commands if
+%              it is loaded
+%            - `\wtitle` and `\ptitle` shorthands added 
+%            - Customizable commands added for endnotes option
+%
+% 2016-09-22 - `endnotes' option added
+% 2016-09-01 - First version on CTAN
 
 % Option to use csquotes default behavior instead of the 
 % US localized punctuation used in this package
@@ -48,11 +52,12 @@
   \DeclareAutoPunct{.,!?}
 \fi
 
-% fontspec defines its own \strong command
-\ifdefined\strong\else
-\NewDocumentCommand{\strong}{}	
-{\textbf}
-\fi
+% NB: fontspec defines its own \strong command, so only define this if fontspec
+% not loaded
+\@ifpackageloaded{fontspec}{}{%
+    \NewDocumentCommand{\strong}{}	
+    {\textbf}
+}
 
 
 \NewDocumentCommand{\quoted}{}	
@@ -75,8 +80,8 @@
 {\textquote}
 
 % Shorter versions of these frequently used commands
-\let\wtitle\worktitle
-\let\ptitle\parttitle
+\NewDocumentCommand{\wtitle}{}{\worktitle}
+\NewDocumentCommand{\ptitle}{}{\parttitle}
 
 % editorial addition
 \NewDocumentCommand{\add}{ m }
@@ -95,12 +100,12 @@
 %*******************
 % Identify problem spot in draft
 \NewDocumentCommand{\XXX}{ O{\add{FIX}} }{%
-  \textbf{#1}%
+  \strong{#1}%
 }
 % Indicate citation to be filled in later
 % Optional argument for indicating the source
 \NewDocumentCommand{\citXXX}{ o }{%
-  \footnote{\textbf{[Citation needed]\IfValueTF{#1}{#1}{}}}%
+    \footnote{\strong{\add{Citation needed}\IfValueTF{#1}{#1}{}}}%
 }
 
 %*******************
@@ -110,20 +115,39 @@
 
 %******************
 % Endnotes, if desired
-% Footnote environment adjusted to fix expansion problem
+
 \ifendnotes
-  \RenewEnviron{Footnote}{\expandafter\footnote\expandafter{\BODY}}[]
-  \let\footnote=\endnote
-  \AtEndDocument{\theendnotes}
+    \RequirePackage{endnotes}
+
+    % Customize these commands with \renewcommand
+    \NewDocumentCommand{\DoBeforeEndnotes}{}{\clearpage}
+    \NewDocumentCommand{\EndnoteFont}{}{}
+
+    % Optionally remove this (\renewcommand{\MakeEndnotes}{})
+    % to avoid conflicts with endnotes or other packages
+    \NewDocumentCommand{\SetupEndnotes}{}{%
+      \let\footnote=\endnote
+      \AtEndDocument{\DoBeforeEndnotes{\EndnoteFont\theendnotes}}%
+    }
+
+    \AtBeginDocument{%
+        \SetupEndnotes{}%
+        % Footnote environment adjusted to fix expansion problem
+        \RenewEnviron{Footnote}{\expandafter\footnote\expandafter{\BODY}}[]%
+    }%
 \fi
+%******************
 
 %****************************************
 % MUSIC SYMBOLS
 
 % Accidentals using LaTeX symbols
-\NewDocumentCommand{\fl}{}{$\flat$}
-\NewDocumentCommand{\na}{}{$\natural$}
-\NewDocumentCommand{\sh}{}{$\sharp$}
+% Use better definitions from musicography if it was loaded first
+\@ifpackageloaded{musicography}{}{%
+    \NewDocumentCommand{\fl}{}{$\flat$}
+    \NewDocumentCommand{\na}{}{$\natural$}
+    \NewDocumentCommand{\sh}{}{$\sharp$}
+}
 
 % Octave subscripts 
 \NewDocumentCommand{\octave}{ }{\textsubscript}

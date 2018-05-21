@@ -39,6 +39,22 @@ Use the \texttt{defaultquotes} package option to restore the default behavior of
 \subsection{\texttt{endnotes}}
 
 The \texttt{endnotes} option converts footnotes to endnotes, including footnotes created with this package's \texttt{Footnote} environment.
+On its own, this option loads the \texttt{endnotes} package and does everything
+necessary for endnotes.
+You can define the following commands to adjust the behavior:
+
+\begin{center}
+\begin{tabular}{ll}
+    Command & Default value \\ \hline
+    \verb|\DoBeforeEndnotes| & \verb|\clearpage| \\
+    \verb|\EndnoteFont| & Empty (normal font) \\
+\end{tabular}
+\end{center}
+
+If you want to setup the endnotes in a completely different way or avoid
+conflicts with another package, you can do
+\verb|\renewcommand{\SetupEndnotes}{}| to eliminate all of this or you can renew
+the command to do something else.
 
 \section{Semantic Commands Defined Without Arguments}
 
@@ -49,6 +65,9 @@ For example, the command for a technical term, typically set in italics is defin
 \NewDocumentCommand{\term}{}{\emph}
 \end{verbatim}
 To redefine it to be set in bold, for example, you can use the basic \LaTeX{} command \verb|\renewcommand{\term}{\textbf}|.
+
+The \verb|\strong| command is already defined in the \texttt{fontspec} package;
+if that package is loaded, this package will not redefine its command.
 
 \begin{center}
 \begin{tabularx}{\linewidth}{llX}
@@ -97,10 +116,10 @@ Use like so:
 
 \begin{verbatim}
 Body text.%
-  \begin{Footnote}
+\begin{Footnote}
   Footnote text.
   More footnote text.
-  \end{Footnote}
+\end{Footnote}
 Continuation of body text.
 \end{verbatim}
 
@@ -110,6 +129,10 @@ Shorthands are defined for musical accidentals, using \LaTeX{} math-mode symbols
 These could be redefined to use Unicode symbols if the font contains them, or with commands from the \texttt{lilyglyphs} package.
 Remember that like all commands without arguments, \LaTeX{} will ignore the space after the command-name, so you will need to write \verb|\fl{}| or \verb|\fl\ |.
 There is also a command for octave numbers, for the system in which middle C begins the fourth octave.
+
+If the \texttt{musicography} package is loaded, it will redefine the commands
+\verb|\fl|, \verb|\sh|, and \verb|\na| to use nicer symbols from the MusiX\TeX{}
+fonts.
 
 \begin{center}
 \begin{tabular}{ll}
