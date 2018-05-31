@@ -99,13 +99,13 @@
 
 %*******************
 % Identify problem spot in draft
-\NewDocumentCommand{\XXX}{ O{\add{FIX}} }{%
-  \strong{#1}%
+\NewDocumentCommand{\XXX}{ O{FIX} }{%
+    \strong{\add{#1}}%
 }
 % Indicate citation to be filled in later
 % Optional argument for indicating the source
 \NewDocumentCommand{\citXXX}{ o }{%
-    \footnote{\strong{\add{Citation needed}\IfValueTF{#1}{#1}{}}}%
+    \footnote{\strong{\add{Citation needed\IfValueTF{#1}{: #1}{}}}}%
 }
 
 %*******************
