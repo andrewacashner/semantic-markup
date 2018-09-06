@@ -18,6 +18,7 @@
 % and the documentation file semantic-markup.tex.
 
 % CHANGE LOG
+% 2018-09-07 - ! and ? removed from autopunct for csquotes
 % 2018-05-21 - Use fontspec's definition of `\strong` if it is loaded
 %            - Use musicography's definition of `\fl`, `\sh`, `\na` commands if
 %              it is loaded
@@ -49,7 +50,7 @@
   % Put end punctuation inside quotation marks 
   % for the specified marks
   \renewcommand{\mktextquote}[6]{#1#2#4#5#3#6}
-  \DeclareAutoPunct{.,!?}
+  \DeclareAutoPunct{.,}
 \fi
 
 % NB: fontspec defines its own \strong command, so only define this if fontspec
