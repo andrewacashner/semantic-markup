@@ -154,9 +154,10 @@
 \NewDocumentCommand{\octave}{ }{\textsubscript}
 
 % Music figures
-\RequirePackage{amsmath}
+%\RequirePackage{amsmath}
 \NewDocumentCommand{\musfig}{ m m }{%
-  $\genfrac{}{}{0pt}{1}{\text{#1}}{\text{#2}}$%
+%  $\genfrac{}{}{0pt}{1}{\text{#1}}{\text{#2}}$%
+    ${#1\atop #2}$%
 } 
 
 % Meter signatures
