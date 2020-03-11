@@ -18,6 +18,7 @@
 \author{Andrew A. Cashner%
   \thanks{\href{mailto:andrewacashner@gmail.com}{\nolinkurl{andrewacashner@gmail.com}}}%
 }
+\date{January 29, 2020}
 
 \begin{document}
 \maketitle
@@ -147,7 +148,9 @@ Command & Alias\\
 \end{tabular}
 \end{center}
 
-For stacked numerals, as in meter signatures or figured bass, we provide two simple options, \verb|\musfig| using \verb|\genfrac| from \texttt{amsmath}, and \verb|\meter|, which uses \verb|\Takt| from the \texttt{harmony} package, which spaces the numerals more closely.
+For stacked numerals, as in meter signatures or figured bass, we provide two
+simple options, \verb|\musfig| using \verb|\Shortstack| from
+\texttt{stackengine}, and \verb|\meter|, which is an alias for the same thing.
 Both commands take two arguments, one for the top numeral and the second for the bottom numeral.
 You could write, for example: 
 

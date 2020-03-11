@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{semantic-markup}[2018/05/21
+\ProvidesPackage{semantic-markup}[2020/01/29
   Macros for TEI-like semantic markup]
-% Copyright 2018 Andrew A. Cashner, andrewacashner@gmail.com
+% Copyright 2020 Andrew A. Cashner, andrewacashner@gmail.com
 
 % This work may be distributed and/or modified under the 
 % conditions of the LaTeX Project Public License, either
@@ -18,6 +18,7 @@
 % and the documentation file semantic-markup.tex.
 
 % CHANGE LOG
+% 2020-01-29 - \musfig uses stackengine now instead of amsmath
 % 2018-09-07 - ! and ? removed from autopunct for csquotes
 % 2018-05-21 - Use fontspec's definition of `\strong` if it is loaded
 %            - Use musicography's definition of `\fl`, `\sh`, `\na` commands if
@@ -154,14 +155,13 @@
 \NewDocumentCommand{\octave}{ }{\textsubscript}
 
 % Music figures
-%\RequirePackage{amsmath}
+\RequirePackage{stackengine}
+\setstackgap{S}{2pt}
 \NewDocumentCommand{\musfig}{ m m }{%
-%  $\genfrac{}{}{0pt}{1}{\text{#1}}{\text{#2}}$%
-    ${#1\atop #2}$%
-} 
+    \Shortstack{#1 #2}%
+}
 
 % Meter signatures
-\RequirePackage[rm]{harmony}
-\NewDocumentCommand{\meter}{ m m }{\Takt{#1}{#2}}
+\NewDocumentCommand{\meter}{}{\musfig}
 
 \endinput
